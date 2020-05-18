@@ -1,0 +1,67 @@
+﻿body {
+    background-color:black;
+}
+
+.navbar {
+    background-color: #6f191c !important;
+}
+
+    .navbar .navbar-brand {
+        color: #fff;
+    }
+
+    .navbar .navbar-nav li a {
+        color: #fff !important;
+    }
+
+.navbar-light .navbar-toggler {
+    color: white !important;
+    background-color: white !important;
+    border-color: white !important;
+}
+
+.rubrik {
+    color: white;
+    text-align: center;
+    margin-top: 30px;
+    font-size:3vw;
+    font-weight: bold;    
+}
+
+
+
+.bakgrundsbild {
+    width: 100%;
+    height: auto;
+}
+
+.logga {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    width: 7%;
+    margin-top:25px;
+}
+
+
+.newmovies {
+    color:#808080;
+    text-align: center;
+    margin-top: 30px;
+    font-size: 3vw;
+    font-weight: bold;
+}
+
+@media only screen and (max-width: 600px) {
+    .rubrik {
+        display: none;
+    }
+}
+
+
+@media only screen and (max-width: 600px) {
+    .newmovies {
+        font-size: 2em;
+    }
+}
+
