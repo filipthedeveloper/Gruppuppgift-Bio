@@ -88,11 +88,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\contact.css" />
+    <Content Include="Content\Login.css" />
     <Content Include="Content\StyleSheet.css" />
     <Content Include="Content\WrapperStyle.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="images\biologga.png" />
+    <Content Include="images\biostol.jpg" />
+    <Content Include="images\red.jpg" />
     <Content Include="images\stolar.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -113,6 +117,7 @@
     <Compile Include="Controllers\BiljettController.cs" />
     <Compile Include="Controllers\FilmController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -130,6 +135,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+    <Content Include="Views\Login\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
