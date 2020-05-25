@@ -1,7 +1,75 @@
-﻿
+﻿@model IEnumerable<Ja.Models.Filmer>
+
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Welcome to Filmer</h2>
+<h2>Index</h2>
 
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Titel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Speltid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Genre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Aldersgrans)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Beskrivning)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sprak)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Utgivningsdatum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Huvudregissor)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Titel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Speltid)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Genre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Aldersgrans)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Beskrivning)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sprak)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Utgivningsdatum)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Huvudregissor)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
