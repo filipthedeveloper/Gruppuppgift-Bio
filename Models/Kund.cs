@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Ja.Models
 {
-    public class Anvandare
+    public class Kund
     {
 
         public string Email { get; set; }
@@ -15,6 +15,7 @@ namespace Ja.Models
         public string TelefonNr { get; set; }
         public string PersonNr { get; set; }
 
+        public int InloggningsId { get; set; }
 
 
     }

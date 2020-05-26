@@ -160,7 +160,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Web.config" />
-    <Content Include="Views\Biljett\Index.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
   </ItemGroup>
@@ -173,7 +172,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Anvandare.cs" />
+    <Compile Include="Models\Kund.cs" />
+    <Compile Include="Models\BokadePlatser.cs" />
     <Compile Include="Models\Filmer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -192,6 +192,7 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Film\Index.cshtml" />
     <Content Include="Views\Login\Create.cshtml" />
+    <Content Include="Views\Biljett\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
