@@ -1,0 +1,65 @@
+﻿body {
+    margin:0;
+    padding:0;
+    
+}
+
+
+.kontakt {
+    margin-top: 50px;
+    width: 150px;
+    height: 45px;
+    background: none;
+    border: 4px solid;
+    color: white;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-size: 16px;
+    position: relative;
+    position:absolute;
+    text-align:center;
+    left:48%;
+
+    
+    
+
+}
+
+    .kontakt::before,
+    .kontakt::after {
+        content: "";
+        position: absolute;
+        width: 14px;
+        height: 4px;
+        background: #6f191c;
+        transform: skewX(50deg);
+        transition: 0.4s linear;
+    }
+
+    .kontakt::before {
+        top: -4px;
+        left: 10%;
+    }
+
+    .kontakt::after {
+        bottom: -4px;
+        right: 10%;
+    }
+
+    .kontakt:hover::before {
+        left: 80%;
+    }
+
+    .kontakt:hover::after {
+        right: 80%;
+    }
+
+
+    h2{
+        text-align:center;
+        color:white;
+        margin-top:14%;
+    }
+
+    

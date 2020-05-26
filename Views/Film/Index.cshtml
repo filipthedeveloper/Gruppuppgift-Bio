@@ -4,11 +4,9 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Information om filmer</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
 <table class="table">
     <tr>
         <th>
@@ -21,7 +19,7 @@
             @Html.DisplayNameFor(model => model.Genre)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Aldersgrans)
+            @Html.DisplayNameFor(model => model.Aldergrans)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Beskrivning)
@@ -50,7 +48,7 @@
             @Html.DisplayFor(modelItem => item.Genre)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Aldersgrans)
+            @Html.DisplayFor(modelItem => item.Aldergrans)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Beskrivning)
@@ -64,11 +62,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.Huvudregissor)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
+       
     </tr>
 }
 

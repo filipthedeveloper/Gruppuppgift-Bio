@@ -10,13 +10,13 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <meta name="viewport" content="width=device-width" />
     <link href="~/Content/Login.css" rel="stylesheet" />
-    <title>Login</title>
+    <title>Profil</title>
 </head>
 <body>
     <div>
        
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="/Home/Index">Home</a>
+            <a class="navbar-brand" href="/Home/Index">Hem</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -27,14 +27,15 @@
                     <li class="nav-item">
                         <a class="nav-link" href="~/Film/Index">Filmer</a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" href="/Home/About">About</a>
+                        <a class="nav-link" href="/Home/Contact">Kontakt</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/Home/Contact">Contact</a>
+                        <a class="nav-link" href="/Home/About">Om</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/Login/Index">Login</a>
+                        <a class="nav-link" href="/Login/Index">Profil</a>
                     </li>
                 </ul>
             </div>
@@ -50,22 +51,24 @@
                             <div class="row justify-content-center px-3 mb-3">
                                 <img class="logga" src="~/images/biologga.png" />
                             </div>
-                            <h3 class="mb-5 text-center heading">We are SystemBio</h3>
-                            <h6 class="msg-info">Please login to your account</h6>
-                            <div class="form-group"> <label class="form-control-label text-muted">Username</label> <input type="text" id="email" name="email" placeholder="Username" class="form-control"> </div>
-                            <div class="form-group"> <label class="form-control-label text-muted">Password</label> <input type="password" id="psw" name="psw" placeholder="Password" class="form-control"> </div>
-                            <div class="row justify-content-center my-3 px-3"> <button class="btn-block btn-color">Login to SystemBio</button> </div>
+                            <h3 class="mb-5 text-center heading">Vi är SystemBio</h3>
+                            <h6 class="msg-info">Logga in</h6>
+                            <div class="form-group"> <label class="form-control-label text-muted">Användarnamn</label> <input type="text" id="email" name="email" placeholder="Användarnamn" class="form-control"> </div>
+                            <div class="form-group"> <label class="form-control-label text-muted">Lösenord</label> <input type="password" id="psw" name="psw" placeholder="Lösenord" class="form-control"> </div>
+                            <div class="row justify-content-center my-3 px-3"> <button class="btn-block btn-color">Logga in på SystemBio</button> </div>
                             
                         </div>
                     </div>
                     <div class="bottom text-center mb-5">
-                        <p href="#" class="sm-text mx-auto mb-3">Don't have an account?<button class="btn btn-white ml-2">Create new</button></p>
+                        <a href="/Login/Create" class="sm-text mx-auto mb-3">Har du inget konto?<button class="btn btn-white ml-2">Skapa nytt</button></a>
                     </div>
                 </div>
                 <div class="card card2">
                     <div class="my-auto mx-md-5 px-md-5 right">
-                        <h3 class="text-white">We are more than just a company</h3> <small class="text-white">SystemBio- One of the world`s leading cinema operators, managing the most respected brands in major European markets and Taiwan, spanning ten countries, over 280 sites and over 2,400 screens.
-                        </small>
+                        <h3 class="text-white">Vi är mer än ett företag!</h3> <small class="text-white">
+    SystemBio-
+    En av världens ledande filmoperatörer, som hanterar de mest respekterade varumärkena på stora europeiska marknader och Taiwan, som sträcker sig över tio länder, över 280 webbplatser och över 2400 skärmar.
+</small>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+    <link href="~/Content/Login.css" rel="stylesheet" />
+<h2>Create</h2>
+
+<div class="container px-4 py-5 mx-auto">
+    <div class="card card0">
+        <div class="d-flex flex-lg-row flex-column-reverse">
+            <div class="card card1">
+                <div class="row justify-content-center my-auto">
+                    <div class="col-md-8 col-10 my-5">
+                        <div class="row justify-content-center px-3 mb-3">
+                            <img class="logga" src="~/images/biologga.png" />
+                        </div>
+                        <h3 class="mb-5 text-center heading"> SystemBio</h3>
+                        <h6 class="msg-info">Skapa profil</h6>
+                        <form method="post" action="@Url.Action("Create", "Login")">
+                            <div class="form-group"> <label class="form-control-label text-muted">Email</label> <input type="text" id="email" name="email" placeholder="Email" class="form-control"> </div>
+                            <div class="form-group"> <label class="form-control-label text-muted">Lösenord</label> <input type="password" id="psw" name="psw" placeholder="Lösenord" class="form-control"> </div>
+                            <div class="form-group"> <label class="form-control-label text-muted">Förnamn</label> <input type="text" id="email" name="email" placeholder="Förnamn" class="form-control"> </div>
+                            <div class="form-group"> <label class="form-control-label text-muted">Efternamn</label> <input type="text" id="psw" name="psw" placeholder="Efternamn" class="form-control"> </div>
+                            <div class="form-group"> <label class="form-control-label text-muted">Tel Nr</label> <input type="text" id="psw" name="psw" placeholder="Tel Nr" class="form-control"> </div>
+                            <div class="form-group"> <label class="form-control-label text-muted">Person Nr</label> <input type="text" id="email" name="email" placeholder="Person Nr" class="form-control"> </div>
+                            @*<div class="row justify-content-center my-3 px-3"> <button class="btn-block btn-color" type="submit">Bekräfta</button> </div>*@
+                            <input class="btn-block btn-color" type="submit" value="Bekräfta"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

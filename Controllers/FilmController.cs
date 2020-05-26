@@ -14,75 +14,56 @@ namespace Ja.Controllers
     public class FilmController : Controller
     {
         // GET: Film
-        
 
-            //Hosted web API REST Service base url  
-            string Baseurl = "http://193.10.202.71/";
-            public async Task<ActionResult> Index()
+
+        //Hosted web API REST Service base url  
+        string Baseurl = "http://193.10.202.71/Filmservice/film";
+        public async Task<ActionResult> Index()
+        {
+
+            List<Filmer> EmpInfo = new List<Filmer>();
+            try
             {
-                try
+                using (var client = new HttpClient())
                 {
-                    List<Filmer> Filmlista = new List<Filmer>();
+                    //Passing service base url  
+                    client.BaseAddress = new Uri(Baseurl);
 
+                    client.DefaultRequestHeaders.Clear();
+                    //Define request data format  
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+                    //Sending request to find web api REST service resource GetAllEmployees using HttpClient  
+                    HttpResponseMessage Res = await client.GetAsync("film");
 
-                    using (var client = new HttpClient())
+                    //Checking the response is successful or not which is sent using HttpClient  
+                    if (Res.IsSuccessStatusCode)
                     {
-                        //Passing service base url  
-                        client.BaseAddress = new Uri(Baseurl);
 
+                        //Storing the response details recieved from web api   
+                        var EmpResponse = Res.Content.ReadAsStringAsync().Result;
 
+                        //Deserializing the response recieved from web api and storing into the Employee list  
+                        EmpInfo = JsonConvert.DeserializeObject<List<Filmer>>(EmpResponse);
 
-                        client.DefaultRequestHeaders.Clear();
-                        //Define request data format  
-                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-
-
-                        //Sending request to find web api REST service resource GetAllEmployees using HttpClient  
-                        HttpResponseMessage Res = await client.GetAsync("/Filmservice/film");
-
-
-
-                        //Checking the response is successful or not which is sent using HttpClient  
-                        if (Res.IsSuccessStatusCode)
-                        {
-                            //Storing the response details recieved from web api   
-                            var EmpResponse = Res.Content.ReadAsStringAsync().Result;
-
-
-
-                            //Deserializing the response recieved from web api and storing into the Employee list  
-                            Filmlista = JsonConvert.DeserializeObject<List<Filmer>>(EmpResponse);
-
-
-
-                        }
-                        //returning the employee list to view  
-                        return View(Filmlista);
                     }
                 }
-                catch (Exception ex)
-                {
-                    //ModelState.AddModelError("", "Uppgifterna kunde inte sparas. " + ex.Message);
-                    Debug.WriteLine("Något gick fel med uppkopplingen. " + ex.Message);
-                    //Console.WriteLine("Något gick fel med uppkopplingen. " + ex.Message);
-                }
+            }
+            catch (Exception)
+            {
+
+                Session["Felhantering"] = "Du är inte uppkopplad mot API:n";
+
+
                 return RedirectToAction("Index", "Film");
 
 
 
             }
-
-
-
-            //// GET: Api
-            //public ActionResult Index()
-            //{
-            //    return View();
-            //}
+            //returning the employee list to view  
+            return View(EmpInfo);
         }
-
     }
+}
 
 

@@ -11,11 +11,11 @@ namespace Ja.Models
 
         public string Titel { get; set; }
 
-        public float Speltid { get; set; }
+        public TimeSpan Speltid { get; set; }
 
         public string Genre { get; set; }
 
-        public int Aldersgrans { get; set; }
+        public double Aldergrans { get; set; }
 
         public string Beskrivning { get; set; }
 
