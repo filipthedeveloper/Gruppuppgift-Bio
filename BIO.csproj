@@ -175,6 +175,8 @@
     <Compile Include="Models\Kund.cs" />
     <Compile Include="Models\BokadePlatser.cs" />
     <Compile Include="Models\Filmer.cs" />
+    <Compile Include="Models\Anvandare.cs" />
+    <Compile Include="Models\VisningsSchema.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -193,6 +195,7 @@
     <Content Include="Views\Film\Index.cshtml" />
     <Content Include="Views\Login\Create.cshtml" />
     <Content Include="Views\Biljett\Index.cshtml" />
+    <Content Include="Views\Biljett\VisningsSchema.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

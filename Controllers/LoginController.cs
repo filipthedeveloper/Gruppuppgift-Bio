@@ -1,5 +1,5 @@
-﻿    
-using System;using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -29,19 +29,24 @@ namespace Ja.Controllers
         public ActionResult Create(string email, string losenord, string fornamn, string efternamn, string personNr, string telefonNr)
         {
             using (var client = new HttpClient())
-                //ANROPA säkerhetsgruppen för att skapa ny inloggning
             {
+                //ANROPA säkerhetsgruppen för att skapa ny inloggning
+                Anvandare a = new Anvandare { Email=email, Losenord = losenord };
                 client.BaseAddress = new Uri("http://193.10.202.74/inlogg/");
-                var response = client.PostAsJsonAsync("anvandares", p).Result;
+                var response = client.PostAsJsonAsync("SkapaAnvandare/{Email}/{Losenord}", a).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     Console.Write("Success");
-                    int inloggningsId = 5; //svaret från säkerhetsgruppen
-                    Kund p = new Kund { Email = email, Losenord = losenord, Fornamn = fornamn, Efternamn = efternamn, PersonNr = personNr, TelefonNr = telefonNr };
-                    //länken till deras service?
-                    p.InloggningsId = inloggningsId;
+                    //Säkerhetsgruppen skall returnera ett Id och Behorighetsniva?
+                    //Få med detta i Kund K?
+                    //int referensId = 1; //svaret från säkerhetsgruppen
+                    //string inloggningsId = response.Content.ToString();
+                    //var inloggningsId = response.Content;
+                    Kund k = new Kund { Email = email, Losenord = losenord, Fornamn = fornamn, Efternamn=efternamn, TelefonNr=telefonNr, PersonNr=personNr, Bonuspoang=0 };
+
+                    //k.InloggningsId = referensId;
                     client.BaseAddress = new Uri("http://193.10.202.72/Kundservice/");
-                     response = client.PostAsJsonAsync("Kunder", p).Result;
+                     response = client.PostAsJsonAsync("Kunder", k).Result;
                     if (response.IsSuccessStatusCode)
                     {
                         Console.Write("Success");

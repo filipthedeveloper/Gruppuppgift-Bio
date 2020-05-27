@@ -6,17 +6,17 @@
 
 <h2>Index</h2>
 
-<p>
+@*<p>
     @Html.ActionLink("Create New", "Create")
-</p>
+</p>*@
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.AntalBokadePlatser)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.VisningsSchemaId)
-        </th>
+        </th>*@
         <th></th>
     </tr>
 
@@ -25,13 +25,21 @@
         <td>
             @Html.DisplayFor(modelItem => item.AntalBokadePlatser)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.VisningsSchemaId)
-        </td>
-        <td>
+        </td>*@
+        @*<td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
             @Html.ActionLink("Details", "Details", new { id=item.Id }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>*@
+    </tr>
+    
+    <tr>
+        <td>
+            <form>
+                <input type="text" id="@item.Id" />
+            </form>
         </td>
     </tr>
 }
