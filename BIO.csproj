@@ -131,6 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\about.css" />
+    <Content Include="Content\filminfo.css" />
     <Content Include="Content\kontakt.css" />
     <Content Include="Content\Login.css" />
     <Content Include="Content\StyleSheet.css" />
@@ -194,7 +195,7 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Film\Index.cshtml" />
     <Content Include="Views\Login\Create.cshtml" />
-    <Content Include="Views\Biljett\Index.cshtml" />
+    <Content Include="Views\Biljett\Boka.cshtml" />
     <Content Include="Views\Biljett\VisningsSchema.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

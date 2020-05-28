@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.ServiceModel;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Ja.Controllers
 {
@@ -15,10 +16,11 @@ namespace Ja.Controllers
     {
         // GET: Biljett
         string Baseurl = "http://193.10.202.72/Biljettservice/";
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Boka(int id)
         {
+            BokadePlatser Bokning = new BokadePlatser();
 
-            List<BokadePlatser> EmpInfo = new List<BokadePlatser>();
+            List<BokadePlatser> BokadePlatser = new List<BokadePlatser>();
             try
             {
                 using (var client = new HttpClient())
@@ -38,11 +40,12 @@ namespace Ja.Controllers
                     {
 
                         //Storing the response details recieved from web api   
-                        var EmpResponse = Res.Content.ReadAsStringAsync().Result;
+                        var BokadePlatserSvar = Res.Content.ReadAsStringAsync().Result;
 
                         //Deserializing the response recieved from web api and storing into the Employee list  
-                        EmpInfo = JsonConvert.DeserializeObject<List<BokadePlatser>>(EmpResponse);
-
+                        BokadePlatser = JsonConvert.DeserializeObject<List<BokadePlatser>>(BokadePlatserSvar);
+                        //Söker ut alla bokade platser där visninschema stämmer med id, får en bokning
+                        Bokning = BokadePlatser.Where(b => b.VisningsSchemaId == id).FirstOrDefault();
                     }
                 }
             }
@@ -57,15 +60,16 @@ namespace Ja.Controllers
 
 
             }
-            //returning the employee list to view  
-            return View(EmpInfo);
+            //Skickar bokningen till sidan
+            return View(Bokning);
         }
 
         //string BaseurlSchema = "http://193.10.202.71/Filmservice/film";
-        public async Task<ActionResult> VisningsSchema()
+        public async Task<ActionResult> VisningsSchema(string titel)
         {
+            VisningsSchema Schema = new VisningsSchema();
 
-            List<VisningsSchema> EmpInfo = new List<VisningsSchema>();
+            List<VisningsSchema> SchemaLista = new List<VisningsSchema>();
             try
             {
                 using (var client = new HttpClient())
@@ -85,10 +89,11 @@ namespace Ja.Controllers
                     {
 
                         //Storing the response details recieved from web api   
-                        var EmpResponse = Res.Content.ReadAsStringAsync().Result;
+                        var SchemaResponse = Res.Content.ReadAsStringAsync().Result;
 
                         //Deserializing the response recieved from web api and storing into the Employee list  
-                        EmpInfo = JsonConvert.DeserializeObject<List<VisningsSchema>>(EmpResponse);
+                        SchemaLista = JsonConvert.DeserializeObject<List<VisningsSchema>>(SchemaResponse);
+                        Schema = SchemaLista.Where(s => s.FilmTitel == titel).FirstOrDefault();
 
                     }
                 }
@@ -105,7 +110,7 @@ namespace Ja.Controllers
 
             }
             //returning the employee list to view  
-            return View(EmpInfo);
+            return View(Schema);
         }
 
     }

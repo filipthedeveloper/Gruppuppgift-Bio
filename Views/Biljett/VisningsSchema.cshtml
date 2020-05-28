@@ -1,9 +1,9 @@
-﻿@model IEnumerable<Ja.Models.VisningsSchema>
+﻿@model Ja.Models.VisningsSchema
 
 @{
-    ViewBag.Title = "VisningsSchema";
+    ViewBag.Title = "Schema";
 }
-
+    <link href="~/Content/filminfo.css" rel="stylesheet" />
 <h2>VisningsSchema</h2>
 
 @*<p>
@@ -20,24 +20,42 @@
         <th>
             @Html.DisplayNameFor(model => model.Visningstid)
         </th>
-        <th></th>
+        <th>
+            Boka dina biljetter
+        </th>
     </tr>
 
-@foreach (var item in Model) {
+    @*@foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FilmTitel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SalongsNamn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Visningstid)
+                </td>
+                <td>
+                    @Html.ActionLink("Boka Biljett", "Boka", new { id=item.Id })
+                </td>
+            </tr>
+        }*@
+
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.FilmTitel)
+            @Html.DisplayFor(modelItem => Model.FilmTitel)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.SalongsNamn)
+            @Html.DisplayFor(modelItem => Model.SalongsNamn)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Visningstid)
+            @Html.DisplayFor(modelItem => Model.Visningstid)
         </td>
         <td>
-            @Html.ActionLink("Boka Biljett", "Index", new { id=item.Id })
+            @Html.ActionLink("Boka Biljett","Boka", new { id = Model.Id })
         </td>
+
     </tr>
-}
 
 </table>

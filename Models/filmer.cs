@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 
@@ -24,6 +25,8 @@ namespace Ja.Models
         public string Utgivningsdatum { get; set; }
 
         public string Huvudregissor { get; set; }
+
+        //public Image Filmbild { get; set; }
 
     }
 }

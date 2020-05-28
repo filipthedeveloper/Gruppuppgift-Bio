@@ -52,7 +52,7 @@ namespace Ja.Controllers
             catch (Exception)
             {
 
-                Session["Felhantering"] = "Du är inte uppkopplad mot API:n";
+                //Session["Felhantering"] = "Du är inte uppkopplad mot API:n";
 
 
                 return RedirectToAction("Index", "Film");

@@ -53,12 +53,16 @@
                             </div>
                             <h3 class="mb-5 text-center heading">Vi är SystemBio</h3>
                             <h6 class="msg-info">Logga in</h6>
-                            <div class="form-group"> <label class="form-control-label text-muted">Användarnamn</label> <input type="text" id="email" name="email" placeholder="Användarnamn" class="form-control"> </div>
-                            <div class="form-group"> <label class="form-control-label text-muted">Lösenord</label> <input type="password" id="psw" name="psw" placeholder="Lösenord" class="form-control"> </div>
-                            <div class="row justify-content-center my-3 px-3"> <button class="btn-block btn-color">Logga in på SystemBio</button> </div>
+                            <!--Formulär för att logga in-->
+                            <form method="post" action="@Url.Action("Index", "Login")">
+                                <div class="form-group"> <label class="form-control-label text-muted">Användarnamn</label> <input type="text" id="email" name="email" placeholder="Användarnamn" class="form-control"> </div>
+                                <div class="form-group"> <label class="form-control-label text-muted">Lösenord</label> <input type="password" id="losenord" name="losenord" placeholder="Lösenord" class="form-control"> </div>
+                                <div class="row justify-content-center my-3 px-3"> <input class="btn-block btn-color" type="submit" value="Logga in" /> </div>
+                            </form>
                             
                         </div>
                     </div>
+                    <!--Knapp som går till att skapa nyt konto-->
                     <div class="bottom text-center mb-5">
                         <a href="/Login/Create" class="sm-text mx-auto mb-3">Har du inget konto?<button class="btn btn-white ml-2">Skapa nytt</button></a>
                     </div>

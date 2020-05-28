@@ -1,10 +1,11 @@
-﻿@model IEnumerable<Ja.Models.BokadePlatser>
+﻿@model Ja.Models.BokadePlatser
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Boka";
 }
 
-<h2>Index</h2>
+    <link href="~/Content/filminfo.css" rel="stylesheet" />
+<h2>Boka</h2>
 
 @*<p>
     @Html.ActionLink("Create New", "Create")
@@ -17,18 +18,17 @@
         @*<th>
             @Html.DisplayNameFor(model => model.VisningsSchemaId)
         </th>*@
-        <th></th>
+        @*<th></th>*@
     </tr>
 
-@foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.AntalBokadePlatser)
+            @Html.DisplayFor(modelItem => Model.AntalBokadePlatser)
         </td>
         @*<td>
             @Html.DisplayFor(modelItem => item.VisningsSchemaId)
-        </td>*@
-        @*<td>
+        </td>
+        <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
             @Html.ActionLink("Details", "Details", new { id=item.Id }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.Id })
@@ -38,10 +38,11 @@
     <tr>
         <td>
             <form>
-                <input type="text" id="@item.Id" />
+                <input type="text" id="@Model.Id" />
+                <br />
+                <input type="submit" />
             </form>
         </td>
     </tr>
-}
 
 </table>

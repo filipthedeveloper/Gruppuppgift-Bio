@@ -4,8 +4,60 @@
     ViewBag.Title = "Index";
 }
 
+@*<link href="~/Content/filminfo.css" rel="stylesheet" />*@
+<link href="~/Content/about.css" rel="stylesheet" />
+<link href="~/Content/filminfo.css" rel="stylesheet" />
 <h2>Information om filmer</h2>
 
+
+@*<h2 style="text-align:center">Our Team</h2>*@
+<br />
+@*<div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="column">
+                <div class="card">
+                    <div class="container">
+                        <h2>@Html.DisplayFor(modelItem => item.Titel)</h2>
+                        <p class="title">@Html.DisplayFor(modelItem => item.Speltid)</p>
+                        <p class="title">@Html.DisplayFor(modelItem => item.Genre)</p>
+                        <p class="title">@Html.DisplayFor(modelItem => item.Aldergrans)</p>
+                        <p class="title">@Html.DisplayFor(modelItem => item.Sprak)</p>
+                        <p class="title"@Html.DisplayFor(modelItem => item.Utgivningsdatum)</p>
+                        <p class="title">@Html.DisplayFor(modelItem => item.Huvudregissor)</p>
+
+                        <p>@Html.DisplayFor(modelItem => item.Beskrivning)</p>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+        <div class="column">
+                <div class="card">
+                    <div class="container">
+                        <h2>Idag</h2>
+                        <p class="title">SystemBios situation</p>
+                        <p>
+                            SystemBio är idag Sveriges största biografkedja med över 280 olika biografer på 170 städer i över 10 länder. Företaget sysselsätter över 3000 personer och hade 2019 ca 8 miljoner biobesök.
+                            Vår kärlek till kunden presenteras ett biobesök i taget, från start till slut.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+
+        <div class="column">
+                <div class="card">
+                    <div class="container">
+                        <h2>Hållbarhet</h2>
+                        <p class="title">& Framtiden</p>
+                        <p>Som en biograf satsar vi på att hålla en god utveckling för framtiden. Genom att vi använder oss av energisparande tekniker och kravmärkt godis. Det är viktigt att ta ansvar för både personalen likväl som miljön. Tillsammans tar vi ett steg mot en bättre värld.</p>
+                    </div>
+                </div>
+            </div>
+    </div>*@
 
 <table class="table">
     <tr>
@@ -33,37 +85,49 @@
         <th>
             @Html.DisplayNameFor(model => model.Huvudregissor)
         </th>
-        <th></th>
+        @*<th
+            >@Html.DisplayNameFor(model => model.Filmbild)
+        </th>*@
+        @*<th>
+            Visa Schema
+        </th>*@
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Titel)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Speltid)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Genre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Aldergrans)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Beskrivning)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Sprak)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Utgivningsdatum)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Huvudregissor)
-        </td>
-       
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Titel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Speltid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Aldergrans)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Beskrivning)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sprak)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Utgivningsdatum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Huvudregissor)
+            </td>
+            @*<td>
+                <img src="@Html.DisplayFor(modelItem => item.Filmbild)" />
+            </td>*@
+            <td>
+                @Html.ActionLink("Schema", "VisningsSchema", "Biljett", new { titel = item.Titel }, null)
+            </td>
+
+        </tr>
+    }
 
 </table>
