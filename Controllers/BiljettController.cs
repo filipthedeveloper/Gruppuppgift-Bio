@@ -113,6 +113,31 @@ namespace Ja.Controllers
             return View(Schema);
         }
 
+        [HttpPost]
+        public ActionResult Boka(string antalIn, int schema)
+        {
+            int antal = Int32.Parse(antalIn);
+
+            //visningsid och antalbokadeplatser
+            BokadePlatser testPlatser = new BokadePlatser { AntalBokadePlatser = antal, VisningsSchemaId = schema };
+            //Bokning testBoka = new Bokning { KundId = , VisningsSchemaId = schema };//KundId skall bli ett värde från sessionen
+
+            Console.WriteLine("äpple");
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://193.10.202.72/BiljettService/");
+                for (int i = 0; i < antal; i++)
+                {
+                    //var response = client.PostAsJsonAsync("Bokningar", testBoka).Result;
+                }
+
+
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }
  

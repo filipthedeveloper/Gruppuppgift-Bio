@@ -37,10 +37,11 @@
     
     <tr>
         <td>
-            <form>
-                <input type="text" id="@Model.Id" />
+            <form method="post" action="@Url.Action("Boka", "Biljett")">
+                <input type="text" id="antal" name="antal" placeholder="Antal">
+                @Html.HiddenFor(model => model.VisningsSchemaId, new { id = "schema" })<!--Skickar med schema-id vidare, tillsammans med antal platser ovan-->
                 <br />
-                <input type="submit" />
+                <input type="submit" value="Bekräfta" />
             </form>
         </td>
     </tr>

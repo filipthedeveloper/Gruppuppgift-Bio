@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using System.Net.Http;
 using Ja.Models;
 using System.Security;
-
+using Newtonsoft.Json;
 
 namespace Ja.Controllers
 {
@@ -25,38 +25,64 @@ namespace Ja.Controllers
             Anvandare login = new Anvandare();
             login.Email = email;
             login.Losenord = losenord;
-            //Anropa säkerhetsgruppen med email och lösenord
-            //Vad vill de ha av oss för login? Objekt av vilken typ? Objekt som innehåller email och losenord
-            //Jag gissar på att grupp 4 vill ha av objekt Anvandare, så börjar programmera in det
+
+            //CheckUser(email, losenord);
             using (var client = new HttpClient())
             {
+                //CheckUser
                 //Anvandare login = new Anvandare { Email = email, Losenord = losenord };
                 client.BaseAddress = new Uri("http://193.10.202.74/inlogg/");
-                var response = client.PostAsJsonAsync("LoggaIn", login).Result; //De returnerar ett objekt som heter Anv? Skall vi skapa en ny modell? Anv?
+                var response = client.PostAsJsonAsync("LoggaIn", login).Result;
 
                 if (response.IsSuccessStatusCode) //Ändra
                 {
-                    //response != 0
-                    var AnvSvar = response.Content.ReadAsStringAsync().Result;
-                    int InloggningsId = Int32.Parse(AnvSvar);
-                    //var InloggningsId = response;
+                    string AnvSvar = response.Content.ReadAsStringAsync().Result;
+                    Anvandare login2 = JsonConvert.DeserializeObject<Anvandare>(AnvSvar);
 
-                    //Anvandare testObj = new Anvandare();
-                    //testObj.
-                    //var testhej = AnvSvar;
-                    Console.Write("Success");
-                    //var testId = 1;
+                    int inloggningsId = login2.Id;
+                    Console.WriteLine("fungera pls");
+                    ////skicka till newtonsoft???
+                    //int inloggningsId = int.Parse(AnvSvar);
+                    ////var AnvSvar = response.Content.ReadAsStringAsync().Result;
+                    ////int inloggningsId = int.Parse(AnvSvar);
+
 
                     using (var client2 = new HttpClient())
                     {
                         client2.BaseAddress = new Uri("http://193.10.202.72/Kundservice/");
-                        var response2 = client.PostAsJsonAsync("GetKund", InloggningsId).Result; //Här tar det stopp
-                        /*StatusCode: 404, ReasonPhrase: 'Not Found', Version: 1.1*/
-                        var test = response2.Content;
 
-                        //Session["potatis"] = test;
+                        //???
+                        //Försöker med Getanrop, men verkar inte fungera. Returnerar "44" + massor med andra knasiga saker
+                        //var response2 = client2.PostAsJsonAsync("Kunder", inloggningsId).Result; //"Kunder" eller "GetKund"
+                        var response2 = client2.GetAsync("Kunder/" + inloggningsId.ToString());
 
-                        //Console.Write("Success");
+
+
+                        //string testResponse = response2.Content.ReadAsStringAsync().Result;
+
+                        var testResponse = response2.Result.ToString();
+                        Console.Write("???");
+                        Kund loginKund = JsonConvert.DeserializeObject<Kund>(testResponse);
+                        Console.Write("???");
+                        //Spara i session efter login
+                        //Session["Kund"] = loginKund;
+                        //Console.Write("???");
+
+                        //Hämta när man ska köpa biljetter
+                        Kund testLogin = null;
+
+                        
+                        //Detta är inte färdigt ännu
+                        if (Session["Kund"] != null)
+                        {
+                            testLogin = (Kund)Session["Kund"];
+                            Console.Write("???");
+
+                            //TempData["tempTest"] = Session["Kund"];
+                        }
+
+
+
                     }
                     //client.BaseAddress = new Uri("http://193.10.202.72/Kundservice/");
                     //var response2 = client.PostAsJsonAsync("GetKund", testId).Result;
@@ -88,30 +114,52 @@ namespace Ja.Controllers
                 //ANROPA säkerhetsgruppen för att skapa nytt konto
                 Anvandare NyAnvandare = new Anvandare { Email=email, Losenord = losenord };
                 client.BaseAddress = new Uri("http://193.10.202.74/inlogg/");
-                var response = client.PostAsJsonAsync("SkapaAnvandare", NyAnvandare).Id;
+                var response = client.PostAsJsonAsync("SkapaAnvandare", NyAnvandare).Result;
 
-                if (response != 0) //Kan behöva att ändras
+                if (response.IsSuccessStatusCode)
                 {
                     //response.IsSuccessStatusCode
-                    var inloggningsId = response;
+                    //var inloggningsId = response;
+                    string inloggningsId2 = response.Content.ReadAsStringAsync().Result;
+                    //skicka till newtonsoft???
+                    int inloggningsId =int.Parse(inloggningsId2);
                     Console.Write("Success");
 
-                    //string inloggningsId = response.Content.ToString();
-                    //SkapaAnvandare/{Email}/{Losenord}
 
-
-                    //var inloggningsId = response.Content;
-                    //PostKund(Kund kund); är en metod som vi skall skicka till. Detta skapar en ny kund hos grupp 2
-                    //Kund skall innehålla: InloggningsId, Email, Losenord, Fornamn, Efternamn, PersonNr, TelefonNr, Bonuspoang
                     Kund kund = new Kund { InloggningsId = inloggningsId, Email = email, Losenord = losenord, Fornamn = fornamn, Efternamn=efternamn, PersonNr = personNr, TelefonNr =telefonNr,  Bonuspoang=0 };
 
                     using (var client2 = new HttpClient())
                     {
                         client2.BaseAddress = new Uri("http://193.10.202.72/Kundservice/");
-                        var response2 = client2.PostAsJsonAsync("PostKund", kund).Result; /*StatusCode: 404, ReasonPhrase: 'Not Found', Version: 1.1*/
-                        if (response2.IsSuccessStatusCode) //Responsen blir false
+                        var response2 = client2.PostAsJsonAsync("Kunder", kund).Result;
+                        //läsa av responsen på samma sätt som vi fick en integer ovan
+
+                        if (response2.IsSuccessStatusCode)
                         {
+                            string testResponse = response2.Content.ReadAsStringAsync().Result;
                             Console.Write("Success");
+                            kund = JsonConvert.DeserializeObject<Kund>(testResponse);
+
+                            //Spara efter ny kund
+                            Session["Kund"] = kund;
+                            Console.Write("Success");
+
+                            //Hämta när man ska köpa biljetter
+                            Kund testKund = null;
+
+                            if (Session["Kund"] != null)
+                            {
+                                testKund = (Kund)Session["Kund"];
+                                Console.Write("Success");
+                            }
+
+
+
+
+                            //Session inloggningsId = InloggningsId
+                            //Spara kundId?
+                            //Man får tillbaka hela objektet
+                            //Spara hela objektet i sessionen
                         }
                         else
                         {
@@ -119,17 +167,6 @@ namespace Ja.Controllers
                         }
                     }
                     
-                    
-
-                    //Console.Write("Success");
-                    //if (response.IsSuccessStatusCode)
-                    //{
-                    //    Console.Write("Success");
-                    //}
-                    //else
-                    //{
-                    //    Console.Write("Error");
-                    //}
                 }
                 else
                 {
@@ -138,9 +175,41 @@ namespace Ja.Controllers
               
             }
 
-
-
             return RedirectToAction("Index");
+        }
+
+        private bool CheckUser(string username, string password)
+        {
+            using (var client = new HttpClient())
+            {
+                Anvandare anvandareAttKolla = new Anvandare { Email = username, Losenord = password };
+
+                client.BaseAddress = new Uri("http://193.10.202.74/inlogg/");
+
+                var response = client.PostAsJsonAsync("LoggaIn", anvandareAttKolla).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    //Webbservicen returnerar ett id om man kan logga in.
+                    //Returnerar inte ett id, returnerar en hel sträng
+                    
+                    string id = response.Content.ReadAsStringAsync().Result;
+
+                    if (id != "" && id != "0")
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
         }
 
         //public ActionResult 
