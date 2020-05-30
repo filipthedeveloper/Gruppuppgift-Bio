@@ -16,6 +16,7 @@ namespace Ja.Controllers
     {
         // GET: Biljett
         string Baseurl = "http://193.10.202.72/Biljettservice/";
+        [Authorize]
         public async Task<ActionResult> Boka(int id)
         {
             BokadePlatser Bokning = new BokadePlatser();
@@ -60,11 +61,14 @@ namespace Ja.Controllers
 
 
             }
+            //Sparar undan id i tempdata, för att senare skicka detta för bokningarna
+            TempData["tempSchemaId"] = id;
             //Skickar bokningen till sidan
             return View(Bokning);
         }
 
         //string BaseurlSchema = "http://193.10.202.71/Filmservice/film";
+        [Authorize]
         public async Task<ActionResult> VisningsSchema(string titel)
         {
             VisningsSchema Schema = new VisningsSchema();
@@ -93,7 +97,9 @@ namespace Ja.Controllers
 
                         //Deserializing the response recieved from web api and storing into the Employee list  
                         SchemaLista = JsonConvert.DeserializeObject<List<VisningsSchema>>(SchemaResponse);
-                        Schema = SchemaLista.Where(s => s.FilmTitel == titel).FirstOrDefault();
+                        //Schema = SchemaLista.Where(s => s.FilmTitel == titel).First();
+                        //KundInfo = results.Where(e => e.InloggningsId == inloggningsId).ToList();
+                        SchemaLista = SchemaLista.Where(e => e.FilmTitel == titel).ToList();
 
                     }
                 }
@@ -101,35 +107,60 @@ namespace Ja.Controllers
             catch (Exception)
             {
 
-                Session["Felhantering"] = "Du är inte uppkopplad mot API:n";
+                //Session["Felhantering"] = "Du är inte uppkopplad mot API:n";
 
 
                 return RedirectToAction("Index", "Film");
 
-
-
             }
-            //returning the employee list to view  
-            return View(Schema);
+            //returning the list to view  
+            return View(SchemaLista);
         }
 
+        [Authorize]
         [HttpPost]
-        public ActionResult Boka(string antalIn, int schema)
+        public ActionResult Boka(string antalIn)    //Här uppstår ett problem. Textrutan som vi skickar in, returnerar en null? Även om man matat in något?
+                                                    //Behöver ändras i inparametern här, beroende på input fältets typ
         {
-            int antal = Int32.Parse(antalIn);
+            int antal = int.Parse(antalIn);
+
+            //Hämta när man ska köpa biljetter
+            Kund testKund = null;
+
+            if (Session["Kund"] != null)
+            {
+                testKund = (Kund)Session["Kund"];
+                Console.Write("Success");
+            }
+
+            int schema = int.Parse(TempData["tempSchemaId"].ToString());
 
             //visningsid och antalbokadeplatser
-            BokadePlatser testPlatser = new BokadePlatser { AntalBokadePlatser = antal, VisningsSchemaId = schema };
+            BokadePlatser nyPlatser = new BokadePlatser { AntalBokadePlatser = antal, VisningsSchemaId = schema };
             //Bokning testBoka = new Bokning { KundId = , VisningsSchemaId = schema };//KundId skall bli ett värde från sessionen
+            Bokningar nyBokning = new Bokningar { VisningsSchemaId = schema, KundId = testKund.InloggningsId };
 
             Console.WriteLine("äpple");
 
-            using (var client = new HttpClient())
+
+
+            //Loopa i genom för de bokningar som skall skickas till http://193.10.202.72/BiljettService/Bokningar/
+            //Loop är antalet bokade platser, skall ha VisningsSchemaId och KundId, datamodellen säger samma
+            using (var clientBoka = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://193.10.202.72/BiljettService/");
+                clientBoka.BaseAddress = new Uri("http://193.10.202.72/BiljettService/");
                 for (int i = 0; i < antal; i++)
                 {
+                    clientBoka.PostAsJsonAsync("Bokningar", nyBokning);
                     //var response = client.PostAsJsonAsync("Bokningar", testBoka).Result;
+                }
+                //Efter loopen, skicka något till Bokadeplatser, på http://193.10.202.72/Biljettservice/Bokadeplatser/
+                //Ser att de skall ha VisningsSchemaId, AntalBokadePlatser, datamodellen säger VisningsSchemaId och TillgandligaPlatser
+                //Klass notis?
+                using (var clientBoka2 = new HttpClient())
+                {
+                    clientBoka2.BaseAddress = new Uri("http://193.10.202.72/Biljettservice/");
+                    clientBoka2.PostAsJsonAsync("Bokadeplatser", nyPlatser);
                 }
 
 

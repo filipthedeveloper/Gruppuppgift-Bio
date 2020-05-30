@@ -4,9 +4,15 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using Ja.Models;
 using System.Security;
 using Newtonsoft.Json;
+using System.ServiceModel;
+using System.Diagnostics;
+
+
 
 namespace Ja.Controllers
 {
@@ -20,8 +26,24 @@ namespace Ja.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(string email, string losenord)
+        public async Task<ActionResult> Index(string email, string losenord)
         {
+            if (email == "" || losenord == "")
+            {
+                ModelState.AddModelError("", "Du måste fylla i både användarnamn och lösenord");
+                return View();
+            }
+
+            //Kolla valid user, för att sedan tillåta genom Authorize
+            bool validUser = false;
+            validUser = CheckUser(email, losenord);
+
+            if (!validUser)
+            {
+                ModelState.AddModelError("", "Inloggningen ej godkänd");
+                return View();
+            }
+
             Anvandare login = new Anvandare();
             login.Email = email;
             login.Losenord = losenord;
@@ -50,36 +72,89 @@ namespace Ja.Controllers
                     using (var client2 = new HttpClient())
                     {
                         client2.BaseAddress = new Uri("http://193.10.202.72/Kundservice/");
-
-                        //???
-                        //Försöker med Getanrop, men verkar inte fungera. Returnerar "44" + massor med andra knasiga saker
-                        //var response2 = client2.PostAsJsonAsync("Kunder", inloggningsId).Result; //"Kunder" eller "GetKund"
-                        var response2 = client2.GetAsync("Kunder/" + inloggningsId.ToString());
-
-
-
-                        //string testResponse = response2.Content.ReadAsStringAsync().Result;
-
-                        var testResponse = response2.Result.ToString();
-                        Console.Write("???");
-                        Kund loginKund = JsonConvert.DeserializeObject<Kund>(testResponse);
-                        Console.Write("???");
-                        //Spara i session efter login
-                        //Session["Kund"] = loginKund;
+                        List<Kund> KundInfo = new List<Kund>();
+                        ////???
+                        ////Försöker med Getanrop, men verkar inte fungera. Returnerar "44" + massor med andra knasiga saker
+                        ////var response2 = client2.PostAsJsonAsync("Kunder", inloggningsId).Result; //"Kunder" eller "GetKund"
+                        //var response2 = client2.GetAsync("Kunder/" + inloggningsId.ToString());
+                        ////string testResponse = response2.Content.ReadAsStringAsync().Result;
+                        //var testResponse = response2.Result.ToString();
+                        //Console.Write("???");
+                        //Kund loginKund = JsonConvert.DeserializeObject<Kund>(testResponse);
                         //Console.Write("???");
 
-                        //Hämta när man ska köpa biljetter
-                        Kund testLogin = null;
+                        client2.DefaultRequestHeaders.Clear();
+                        //Define request data format  
+                        client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                        HttpResponseMessage response2 = await client2.GetAsync("Kunder");
+                        Console.Write("???");
 
-                        
-                        //Detta är inte färdigt ännu
-                        if (Session["Kund"] != null)
+                        if (response2.IsSuccessStatusCode)
                         {
-                            testLogin = (Kund)Session["Kund"];
+                            //Sparar undan svarets innehåll från web api
+                            var KundResponse = response2.Content.ReadAsStringAsync().Result;
+
+                            //Deserializing the response recieved from web api and storing into the Employee list  
+                            //Deserializing på svaret från webapi, och sparar det i en lista?
+                            //KundInfo = JsonConvert.DeserializeObject<List<Kund>>(KundResponse);
+                            var results = JsonConvert.DeserializeObject<List<Kund>>(KundResponse);
+                            //var banans = results.Where(e => e.InloggningsId == inloggningsId).ToList();
+                            //var testhej = results.Where(e => e.InloggningsId == inloggningsId).ToString();
+                            KundInfo = results.Where(e => e.InloggningsId == inloggningsId).ToList();
                             Console.Write("???");
 
-                            //TempData["tempTest"] = Session["Kund"];
+                            Kund aktivKund = new Kund { 
+                                InloggningsId = KundInfo[0].InloggningsId, 
+                                Email = KundInfo[0].Email,
+                                Losenord = KundInfo[0].Losenord,
+                                Fornamn = KundInfo[0].Fornamn,
+                                Efternamn = KundInfo[0].Efternamn,
+                                TelefonNr = KundInfo[0].TelefonNr,
+                                PersonNr = KundInfo[0].PersonNr,
+                                Bonuspoang = KundInfo[0].Bonuspoang
+                            };
+
+
+                            //var listString = KundInfo.Where(e => e.InloggningsId == inloggningsId).ToString();
+                            Console.Write("???");
+
+                            
+
+                            if (validUser)
+                            {
+                                System.Web.Security.FormsAuthentication.RedirectFromLoginPage(aktivKund.Email, false);
+
+                                //Spara i session efter login om allt lyckas
+                                Session["Kund"] = aktivKund;
+                                Console.Write("???");
+
+                                if (Session["Kund"] != null)
+                                {
+                                    return RedirectToAction("Index", "Film");
+                                }
+                            }
+                            //Lägger till errormeddelande
+                            ModelState.AddModelError("", "Innloggningen ej godkänd");
+                            return View();
+
+
+                            
                         }
+
+                        
+
+                        //Hämta när man ska köpa biljetter
+                        //Kund testLogin = null;
+
+                        
+                        ////Detta är inte färdigt ännu
+                        //if (Session["Kund"] != null)
+                        //{
+                        //    testLogin = (Kund)Session["Kund"];
+                        //    Console.Write("???");
+
+                        //    //TempData["tempTest"] = Session["Kund"];
+                        //}
 
 
 
@@ -95,8 +170,6 @@ namespace Ja.Controllers
                 }
             }
             
-
-
             return View();
         }
 
@@ -140,18 +213,21 @@ namespace Ja.Controllers
                             Console.Write("Success");
                             kund = JsonConvert.DeserializeObject<Kund>(testResponse);
 
+
                             //Spara efter ny kund
                             Session["Kund"] = kund;
                             Console.Write("Success");
 
-                            //Hämta när man ska köpa biljetter
-                            Kund testKund = null;
 
-                            if (Session["Kund"] != null)
-                            {
-                                testKund = (Kund)Session["Kund"];
-                                Console.Write("Success");
-                            }
+
+                            ////Hämta när man ska köpa biljetter
+                            //Kund testKund = null;
+
+                            //if (Session["Kund"] != null)
+                            //{
+                            //    testKund = (Kund)Session["Kund"];
+                            //    Console.Write("Success");
+                            //}
 
 
 
@@ -190,12 +266,12 @@ namespace Ja.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    //Webbservicen returnerar ett id om man kan logga in.
+                    //Webbservicen returnerar om man kan logga in.
                     //Returnerar inte ett id, returnerar en hel sträng
                     
                     string id = response.Content.ReadAsStringAsync().Result;
-
-                    if (id != "" && id != "0")
+                    //var sLength = id.Length();
+                    if (id != "null")
                     {
                         return true;
                     }

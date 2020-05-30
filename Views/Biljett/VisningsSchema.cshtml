@@ -1,4 +1,4 @@
-﻿@model Ja.Models.VisningsSchema
+﻿@model IEnumerable<Ja.Models.VisningsSchema>
 
 @{
     ViewBag.Title = "Schema";
@@ -25,7 +25,7 @@
         </th>
     </tr>
 
-    @*@foreach (var item in Model) {
+    @foreach (var item in Model) {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.FilmTitel)
@@ -40,9 +40,9 @@
                     @Html.ActionLink("Boka Biljett", "Boka", new { id=item.Id })
                 </td>
             </tr>
-        }*@
+        }
 
-    <tr>
+    @*<tr>
         <td>
             @Html.DisplayFor(modelItem => Model.FilmTitel)
         </td>
@@ -56,6 +56,6 @@
             @Html.ActionLink("Boka Biljett","Boka", new { id = Model.Id })
         </td>
 
-    </tr>
+    </tr>*@
 
 </table>

@@ -16,8 +16,5 @@ namespace Ja.Models
         public string PersonNr { get; set; }
         public string TelefonNr { get; set; }
         public int Bonuspoang { get; set; }
-
-
-
     }
 }

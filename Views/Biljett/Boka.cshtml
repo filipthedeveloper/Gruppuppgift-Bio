@@ -38,8 +38,9 @@
     <tr>
         <td>
             <form method="post" action="@Url.Action("Boka", "Biljett")">
-                <input type="text" id="antal" name="antal" placeholder="Antal">
-                @Html.HiddenFor(model => model.VisningsSchemaId, new { id = "schema" })<!--Skickar med schema-id vidare, tillsammans med antal platser ovan-->
+                <input type="number" id="antal" name="antal" placeholder="Antal">
+                @*<input type="number" id="antal" name="antal" placeholder="Antal">*@
+                @*@Html.HiddenFor(model => model.VisningsSchemaId, new { id = Model.VisningsSchemaId })Skickar med schema-id vidare, tillsammans med antal platser ovan*@
                 <br />
                 <input type="submit" value="Bekräfta" />
             </form>
