@@ -62,7 +62,7 @@ namespace Ja.Controllers
                     Anvandare login2 = JsonConvert.DeserializeObject<Anvandare>(AnvSvar);
 
                     int inloggningsId = login2.Id;
-                    Console.WriteLine("fungera pls");
+                    //Console.WriteLine("fungera pls");
                     ////skicka till newtonsoft???
                     //int inloggningsId = int.Parse(AnvSvar);
                     ////var AnvSvar = response.Content.ReadAsStringAsync().Result;
@@ -73,35 +73,22 @@ namespace Ja.Controllers
                     {
                         client2.BaseAddress = new Uri("http://193.10.202.72/Kundservice/");
                         List<Kund> KundInfo = new List<Kund>();
-                        ////???
-                        ////Försöker med Getanrop, men verkar inte fungera. Returnerar "44" + massor med andra knasiga saker
-                        ////var response2 = client2.PostAsJsonAsync("Kunder", inloggningsId).Result; //"Kunder" eller "GetKund"
-                        //var response2 = client2.GetAsync("Kunder/" + inloggningsId.ToString());
-                        ////string testResponse = response2.Content.ReadAsStringAsync().Result;
-                        //var testResponse = response2.Result.ToString();
-                        //Console.Write("???");
-                        //Kund loginKund = JsonConvert.DeserializeObject<Kund>(testResponse);
-                        //Console.Write("???");
 
                         client2.DefaultRequestHeaders.Clear();
                         //Define request data format  
                         client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                         HttpResponseMessage response2 = await client2.GetAsync("Kunder");
-                        Console.Write("???");
+                        //Console.Write("???");
 
                         if (response2.IsSuccessStatusCode)
                         {
                             //Sparar undan svarets innehåll från web api
                             var KundResponse = response2.Content.ReadAsStringAsync().Result;
 
-                            //Deserializing the response recieved from web api and storing into the Employee list  
-                            //Deserializing på svaret från webapi, och sparar det i en lista?
-                            //KundInfo = JsonConvert.DeserializeObject<List<Kund>>(KundResponse);
+                            //Deserializing på svaret från webapi, och sparar det i en lista
                             var results = JsonConvert.DeserializeObject<List<Kund>>(KundResponse);
-                            //var banans = results.Where(e => e.InloggningsId == inloggningsId).ToList();
-                            //var testhej = results.Where(e => e.InloggningsId == inloggningsId).ToString();
                             KundInfo = results.Where(e => e.InloggningsId == inloggningsId).ToList();
-                            Console.Write("???");
+                            //Console.Write("???");
 
                             Kund aktivKund = new Kund { 
                                 InloggningsId = KundInfo[0].InloggningsId, 
@@ -114,11 +101,7 @@ namespace Ja.Controllers
                                 Bonuspoang = KundInfo[0].Bonuspoang
                             };
 
-
-                            //var listString = KundInfo.Where(e => e.InloggningsId == inloggningsId).ToString();
-                            Console.Write("???");
-
-                            
+                            //Console.Write("???");
 
                             if (validUser)
                             {
@@ -126,7 +109,7 @@ namespace Ja.Controllers
 
                                 //Spara i session efter login om allt lyckas
                                 Session["Kund"] = aktivKund;
-                                Console.Write("???");
+                                //Console.Write("???");
 
                                 if (Session["Kund"] != null)
                                 {
@@ -140,10 +123,8 @@ namespace Ja.Controllers
 
                             
                         }
-
-                        
-
                         //Hämta när man ska köpa biljetter
+                        //Detta är bara testkod
                         //Kund testLogin = null;
 
                         
@@ -155,21 +136,13 @@ namespace Ja.Controllers
 
                         //    //TempData["tempTest"] = Session["Kund"];
                         //}
-
-
-
                     }
-                    //client.BaseAddress = new Uri("http://193.10.202.72/Kundservice/");
-                    //var response2 = client.PostAsJsonAsync("GetKund", testId).Result;
-
-
                 }
                 else
                 {
                     Console.Write("Error");
                 }
             }
-            
             return View();
         }
 
@@ -191,12 +164,10 @@ namespace Ja.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    //response.IsSuccessStatusCode
-                    //var inloggningsId = response;
                     string inloggningsId2 = response.Content.ReadAsStringAsync().Result;
-                    //skicka till newtonsoft???
-                    int inloggningsId =int.Parse(inloggningsId2);
-                    Console.Write("Success");
+
+                    int inloggningsId = int.Parse(inloggningsId2);
+                    //Console.Write("Success");
 
 
                     Kund kund = new Kund { InloggningsId = inloggningsId, Email = email, Losenord = losenord, Fornamn = fornamn, Efternamn=efternamn, PersonNr = personNr, TelefonNr =telefonNr,  Bonuspoang=0 };
@@ -209,33 +180,14 @@ namespace Ja.Controllers
 
                         if (response2.IsSuccessStatusCode)
                         {
-                            string testResponse = response2.Content.ReadAsStringAsync().Result;
-                            Console.Write("Success");
-                            kund = JsonConvert.DeserializeObject<Kund>(testResponse);
+                            //Kod för att spara registreringen av användaren i en session?
+                            //string testResponse = response2.Content.ReadAsStringAsync().Result;
+                            //Console.Write("Success");
+                            //kund = JsonConvert.DeserializeObject<Kund>(testResponse);
 
-
-                            //Spara efter ny kund
-                            Session["Kund"] = kund;
-                            Console.Write("Success");
-
-
-
-                            ////Hämta när man ska köpa biljetter
-                            //Kund testKund = null;
-
-                            //if (Session["Kund"] != null)
-                            //{
-                            //    testKund = (Kund)Session["Kund"];
-                            //    Console.Write("Success");
-                            //}
-
-
-
-
-                            //Session inloggningsId = InloggningsId
-                            //Spara kundId?
-                            //Man får tillbaka hela objektet
-                            //Spara hela objektet i sessionen
+                            ////Spara efter ny kund
+                            //Session["Kund"] = kund;
+                            //Console.Write("Success");
                         }
                         else
                         {
@@ -268,9 +220,8 @@ namespace Ja.Controllers
                 {
                     //Webbservicen returnerar om man kan logga in.
                     //Returnerar inte ett id, returnerar en hel sträng
-                    
                     string id = response.Content.ReadAsStringAsync().Result;
-                    //var sLength = id.Length();
+
                     if (id != "null")
                     {
                         return true;
@@ -287,7 +238,5 @@ namespace Ja.Controllers
             }
 
         }
-
-        //public ActionResult 
     }
 }

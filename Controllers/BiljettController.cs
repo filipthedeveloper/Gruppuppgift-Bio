@@ -19,7 +19,7 @@ namespace Ja.Controllers
         [Authorize]
         public async Task<ActionResult> Boka(int id)
         {
-            BokadePlatser Bokning = new BokadePlatser();
+            //BokadePlatser Bokning = new BokadePlatser();
 
             List<BokadePlatser> BokadePlatser = new List<BokadePlatser>();
             try
@@ -46,7 +46,8 @@ namespace Ja.Controllers
                         //Deserializing the response recieved from web api and storing into the Employee list  
                         BokadePlatser = JsonConvert.DeserializeObject<List<BokadePlatser>>(BokadePlatserSvar);
                         //Söker ut alla bokade platser där visninschema stämmer med id, får en bokning
-                        Bokning = BokadePlatser.Where(b => b.VisningsSchemaId == id).FirstOrDefault();
+                        //Bokning = BokadePlatser.Where(b => b.VisningsSchemaId == id).FirstOrDefault();
+                        BokadePlatser = BokadePlatser.Where(e => e.VisningsSchemaId == id).ToList();
                     }
                 }
             }
@@ -64,14 +65,14 @@ namespace Ja.Controllers
             //Sparar undan id i tempdata, för att senare skicka detta för bokningarna
             TempData["tempSchemaId"] = id;
             //Skickar bokningen till sidan
-            return View(Bokning);
+            return View(BokadePlatser);
         }
 
         //string BaseurlSchema = "http://193.10.202.71/Filmservice/film";
-        [Authorize]
+        //[Authorize]
         public async Task<ActionResult> VisningsSchema(string titel)
         {
-            VisningsSchema Schema = new VisningsSchema();
+            //VisningsSchema Schema = new VisningsSchema();
 
             List<VisningsSchema> SchemaLista = new List<VisningsSchema>();
             try
@@ -119,26 +120,28 @@ namespace Ja.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult Boka(string antalIn)    //Här uppstår ett problem. Textrutan som vi skickar in, returnerar en null? Även om man matat in något?
-                                                    //Behöver ändras i inparametern här, beroende på input fältets typ
+        public ActionResult Boka(string antalIn)    //Här uppstår ett problem. Textrutan som vi skickar in, returnerar en null? Även om man matat in något? Behöver ändras i inparametern här, beroende på input fältets typ
         {
+
+            Console.Write("???");
             int antal = int.Parse(antalIn);
 
             //Hämta när man ska köpa biljetter
-            Kund testKund = null;
+            Kund inloggadKund = null;
 
             if (Session["Kund"] != null)
             {
-                testKund = (Kund)Session["Kund"];
+                inloggadKund = (Kund)Session["Kund"];
                 Console.Write("Success");
             }
+            //else errorgrejs måste in här, om sessionen är nnull hur skall de då kunna få boka?
 
             int schema = int.Parse(TempData["tempSchemaId"].ToString());
 
             //visningsid och antalbokadeplatser
             BokadePlatser nyPlatser = new BokadePlatser { AntalBokadePlatser = antal, VisningsSchemaId = schema };
             //Bokning testBoka = new Bokning { KundId = , VisningsSchemaId = schema };//KundId skall bli ett värde från sessionen
-            Bokningar nyBokning = new Bokningar { VisningsSchemaId = schema, KundId = testKund.InloggningsId };
+            Bokningar nyBokning = new Bokningar { VisningsSchemaId = schema, KundId = inloggadKund.InloggningsId };
 
             Console.WriteLine("äpple");
 
@@ -151,7 +154,11 @@ namespace Ja.Controllers
                 clientBoka.BaseAddress = new Uri("http://193.10.202.72/BiljettService/");
                 for (int i = 0; i < antal; i++)
                 {
-                    clientBoka.PostAsJsonAsync("Bokningar", nyBokning);
+                    var responseBoka = clientBoka.PostAsJsonAsync("Bokningar", nyBokning).Result;
+                    if (responseBoka.IsSuccessStatusCode)
+                    {
+                        Console.WriteLine("???");
+                    }
                     //var response = client.PostAsJsonAsync("Bokningar", testBoka).Result;
                 }
                 //Efter loopen, skicka något till Bokadeplatser, på http://193.10.202.72/Biljettservice/Bokadeplatser/
@@ -160,7 +167,11 @@ namespace Ja.Controllers
                 using (var clientBoka2 = new HttpClient())
                 {
                     clientBoka2.BaseAddress = new Uri("http://193.10.202.72/Biljettservice/");
-                    clientBoka2.PostAsJsonAsync("Bokadeplatser", nyPlatser);
+                    var responsePlatser = clientBoka2.PostAsJsonAsync("Bokadeplatser", nyPlatser).Result;
+                    if (responsePlatser.IsSuccessStatusCode)
+                    {
+                        Console.WriteLine("???");
+                    }
                 }
 
 
