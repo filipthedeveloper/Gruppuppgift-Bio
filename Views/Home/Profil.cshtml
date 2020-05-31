@@ -1,0 +1,76 @@
+﻿@model IEnumerable<Ja.Models.Kund>
+
+@{
+    ViewBag.Title = "Profil";
+}
+
+<h2>Profil</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.InloggningsId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Losenord)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Fornamn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Efternamn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PersonNr)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TelefonNr)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Bonuspoang)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.InloggningsId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Losenord)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fornamn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Efternamn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PersonNr)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TelefonNr)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Bonuspoang)
+        </td>
+        @*<td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>*@
+    </tr>
+}
+    
+</table>
+<a href="~/Login/LogOut">Logga ut</a>

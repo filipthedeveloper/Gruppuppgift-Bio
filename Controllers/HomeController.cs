@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Ja.Models;
+using Newtonsoft.Json;
+using System.Web.Security;
 
 namespace Ja.Controllers
 {
@@ -17,20 +19,7 @@ namespace Ja.Controllers
 
         public ActionResult Contact()
         {
-            //Testkod för att kolla att sessionen fungerar
-            //Sessionen fungerade för mig, då jag fick fram ur sessionen
-            ////Hämta när man ska köpa biljetter
-            Kund testKund = null;
-
-            if (Session["Kund"] != null)
-            {
-                testKund = (Kund)Session["Kund"];
-                Console.Write("test");
-            }
-            Console.Write("test");
-
-
-
+            
 
             return View();
         }
@@ -38,6 +27,18 @@ namespace Ja.Controllers
         public ActionResult About()
         {
             return View();
+        }
+
+        [Authorize]
+        public ActionResult Profil()
+        {
+            //Kund inloggadKund = null;
+            //inloggadKund = (Kund)Session["Kund"];
+
+            //var ktest = JsonConvert.DeserializeObject<List<Kund>>();
+
+
+            return View(Session["KundLista"]);
         }
 
     }

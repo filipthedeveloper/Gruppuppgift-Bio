@@ -11,6 +11,7 @@ using System.Security;
 using Newtonsoft.Json;
 using System.ServiceModel;
 using System.Diagnostics;
+using System.Web.Security;
 
 
 
@@ -88,7 +89,7 @@ namespace Ja.Controllers
                             //Deserializing på svaret från webapi, och sparar det i en lista
                             var results = JsonConvert.DeserializeObject<List<Kund>>(KundResponse);
                             KundInfo = results.Where(e => e.InloggningsId == inloggningsId).ToList();
-                            //Console.Write("???");
+                            Console.Write("???");
 
                             Kund aktivKund = new Kund { 
                                 InloggningsId = KundInfo[0].InloggningsId, 
@@ -108,12 +109,14 @@ namespace Ja.Controllers
                                 System.Web.Security.FormsAuthentication.RedirectFromLoginPage(aktivKund.Email, false);
 
                                 //Spara i session efter login om allt lyckas
-                                Session["Kund"] = aktivKund;
+                                Session["KundSession"] = aktivKund;
+                                Session["KundLista"] = KundInfo;
                                 //Console.Write("???");
 
-                                if (Session["Kund"] != null)
+                                if (Session["KundSession"] != null)
                                 {
-                                    return RedirectToAction("Index", "Film");
+                                    TempData["login"] = "Inloggningen lyckades!";
+                                    return RedirectToAction("Index", "Home");
                                 }
                             }
                             //Lägger till errormeddelande
@@ -128,14 +131,7 @@ namespace Ja.Controllers
                         //Kund testLogin = null;
 
                         
-                        ////Detta är inte färdigt ännu
-                        //if (Session["Kund"] != null)
-                        //{
-                        //    testLogin = (Kund)Session["Kund"];
-                        //    Console.Write("???");
-
-                        //    //TempData["tempTest"] = Session["Kund"];
-                        //}
+                        
                     }
                 }
                 else
@@ -143,6 +139,7 @@ namespace Ja.Controllers
                     Console.Write("Error");
                 }
             }
+
             return View();
         }
 
@@ -185,9 +182,6 @@ namespace Ja.Controllers
                             //Console.Write("Success");
                             //kund = JsonConvert.DeserializeObject<Kund>(testResponse);
 
-                            ////Spara efter ny kund
-                            //Session["Kund"] = kund;
-                            //Console.Write("Success");
                         }
                         else
                         {
@@ -237,6 +231,21 @@ namespace Ja.Controllers
                 }
             }
 
+        }
+
+        //Loggar ut användaren
+        public ActionResult LogOut()
+        {
+            FormsAuthentication.SignOut();
+            Session.Abandon();
+            return RedirectToAction("LogOut2", "login");
+        }
+
+        //Loggar ut användaren
+        public ActionResult LogOut2()
+        {
+            TempData["logout"] = "Du är nu utloggad.";
+            return RedirectToAction("Index", "Home");
         }
     }
 }

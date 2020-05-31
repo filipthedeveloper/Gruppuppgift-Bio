@@ -11,6 +11,7 @@
     <link href="~/Content/WrapperStyle.css" rel="stylesheet" />
 </head>
 <body>
+
     <h1 class="rubrik">Välkommen till Systembio</h1>
     <img class="logga" src="~/images/biologga.png" />
     <img class="bakgrundsbild" src="~/images/stolar.jpg" />
@@ -18,7 +19,7 @@
 
 
     <div class="container">
-      
+
         <div class="wrapper">
 
             <section id="section1">
@@ -133,8 +134,26 @@
             </section>
         </div>
     </div>
-
-
+    @{
+        if (TempData["login"] != null)
+        {
+            <script type="text/javascript">
+                alert(@Html.Raw(Json.Encode(TempData["login"])))
+            </script>
+        }
+        if (TempData["logout"] != null)
+        {
+            <script type="text/javascript">
+                alert(@Html.Raw(Json.Encode(TempData["logout"])))
+            </script>
+        }
+        if (TempData["boka"] != null)
+        {
+<script type="text/javascript">
+                alert(@Html.Raw(Json.Encode(TempData["boka"])))
+</script>
+        }
+    }
 </body>
 </html>
 

@@ -26,7 +26,7 @@ namespace Ja.Models
 
         public string Huvudregissor { get; set; }
 
-        //public Image Filmbild { get; set; }
+        public string Filmbild { get; set; }
 
     }
 }

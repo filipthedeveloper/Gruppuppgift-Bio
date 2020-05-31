@@ -54,7 +54,7 @@ namespace Ja.Controllers
             catch (Exception)
             {
 
-                Session["Felhantering"] = "Du är inte uppkopplad mot API:n";
+                //Session["Felhantering"] = "Du är inte uppkopplad mot API:n";
 
 
                 return RedirectToAction("Index", "Biljett");
@@ -129,9 +129,9 @@ namespace Ja.Controllers
             //Hämta när man ska köpa biljetter
             Kund inloggadKund = null;
 
-            if (Session["Kund"] != null)
+            if (Session["KundSession"] != null)
             {
-                inloggadKund = (Kund)Session["Kund"];
+                inloggadKund = (Kund)Session["KundSession"];
                 Console.Write("Success");
             }
             //else errorgrejs måste in här, om sessionen är nnull hur skall de då kunna få boka?
@@ -177,6 +177,7 @@ namespace Ja.Controllers
 
             }
 
+            TempData["boka"] = "Din bokning är nu genomförd.";
             return RedirectToAction("Index", "Home");
         }
 
