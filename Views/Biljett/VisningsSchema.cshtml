@@ -3,59 +3,54 @@
 @{
     ViewBag.Title = "Schema";
 }
-    <link href="~/Content/filminfo.css" rel="stylesheet" />
-<h2>VisningsSchema</h2>
+@*<link href="~/Content/filminfo.css" rel="stylesheet" />*@
+<link href="~/Content/schema.css" rel="stylesheet" />
+<h1>Schema</h1>
 
 @*<p>
-    @Html.ActionLink("Create New", "Create")
-</p>*@
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.FilmTitel)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SalongsNamn)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Visningstid)
-        </th>
-        <th>
-            Boka dina biljetter
-        </th>
-    </tr>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
 
-    @foreach (var item in Model) {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FilmTitel)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SalongsNamn)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Visningstid)
-                </td>
-                <td>
-                    @Html.ActionLink("Boka Biljett", "Boka", new { id=item.Id })
-                </td>
-            </tr>
-        }
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="column">
+            <div class="card">
+                @*<img src="" />*@
+                <div class="container" style="text-align:center">
+                    <h2>@Html.DisplayFor(modelItem => item.FilmTitel)</h2>
+                    <p class="title">
+                        <label style="font-weight:bold">Salong:</label> @Html.DisplayFor(modelItem => item.SalongsNamn) <br />
+                        <label style="font-weight:bold">@Html.DisplayNameFor(model => model.Visningstid):</label> @Html.DisplayFor(modelItem => item.Visningstid) <br />
+                    </p>
+                    @*<p>@Html.ActionLink("Schema", "VisningsSchema", "Biljett", new { titel = item.Titel }, null)</p>*@
+                    <input class="button" value="Schema" onclick="location.href='@Url.Action("Boka", "Biljett", new { id = item.Id })'" />
+                </div>
+                @*<div class="sub_div">
+                    <a href="">content</a>
+                </div>*@
 
-    @*<tr>
-        <td>
-            @Html.DisplayFor(modelItem => Model.FilmTitel)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => Model.SalongsNamn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => Model.Visningstid)
-        </td>
-        <td>
-            @Html.ActionLink("Boka Biljett","Boka", new { id = Model.Id })
-        </td>
 
-    </tr>*@
 
-</table>
+
+
+
+                @*<form>
+                    <div class="sub_div">
+                        <input class="button" type="submit" value="Schema" onclick="" />
+                    </div>
+                </form>*@
+
+                @*<form method="post" action="@Url.Action("Boka", "Biljett", new { id = item.Id })">
+                    <input type="hidden" id="@item.Titel" />
+                    <div class="sub_div">
+                        <input class="button" type="submit" value="Schema" />
+                    </div>
+                </form>*@
+
+
+            </div>
+
+        </div>
+    }
+</div>

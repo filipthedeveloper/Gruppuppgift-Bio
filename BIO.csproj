@@ -131,10 +131,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\about.css" />
+    <Content Include="Content\boka.css" />
     <Content Include="Content\filminfo.css" />
     <Content Include="Content\filmlista.css" />
     <Content Include="Content\kontakt.css" />
     <Content Include="Content\Login.css" />
+    <Content Include="Content\profil.css" />
+    <Content Include="Content\schema.css" />
     <Content Include="Content\StyleSheet.css" />
     <Content Include="Content\WrapperStyle.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -148,6 +151,7 @@
     <Content Include="images\om5.jpg" />
     <Content Include="images\red.jpg" />
     <Content Include="images\stolar.jpg" />
+    <Content Include="images\user.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />

@@ -26,7 +26,7 @@ html {
 
 .container {
     padding: 0 16px;
-    height:550px;
+    height: 200px;
 }
 
     .container::after, .row::after {
@@ -65,18 +65,28 @@ html {
 .sub_div {
     position: absolute;
     bottom: 0px;
-    width:100%;
-    padding-left:20%;
-    padding-right:20%;
-    padding-bottom:10px;
-} 
-
-img{
-    height:30%;
-    padding-bottom:10px;
+    width: 100%;
+    padding-left: 20%;
+    padding-right: 20%;
+    padding-bottom: 10px;
 }
 
-.centrera{
-    position:absolute;
-    left:50%;
+img {
+    height: 30%;
+    padding-bottom: 10px;
+}
+
+.centrera {
+    position: absolute;
+    left: 50%;
+}
+
+h1 {
+    text-align:center;
+    color:white;
+    padding-top:10px;
+}
+
+h2{
+    padding-top:10px;
 }

@@ -4,52 +4,72 @@
     ViewBag.Title = "Boka";
 }
 
-    <link href="~/Content/filminfo.css" rel="stylesheet" />
-<h2>Boka</h2>
+    <link href="~/Content/boka.css" rel="stylesheet" />
 
-@*<p>
-    @Html.ActionLink("Create New", "Create")
-</p>*@
-<table class="table">
+@{ var i = 0; }
+@foreach (var item in Model)
+{
+    i = i + item.AntalBokadePlatser;
+}
+
+<div class="row">
+    <div class="column">
+        <div class="card">
+            <div class="container" style="text-align:center">
+                <h2 style="padding-top:10px">Bokning</h2>
+                <p class="title">
+                    <label style="font-weight:bold">Redan bokade platser:</label> @Html.Raw(i)
+                </p>
+                @*<p>@Html.ActionLink("Schema", "VisningsSchema", "Biljett", new { titel = item.Titel }, null)</p>*@
+                <h4>Hur många platser vill du boka?</h4>
+                <form method="post" action="@Url.Action("Boka", "Biljett")">
+                    <input style="border-radius:100px; text-align:center" type="text" id="antalIn" name="antalIn" placeholder="Antal">
+                    <br /><br />
+                    <input class="button" type="submit" value="Bekräfta" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@*<table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.AntalBokadePlatser)
         </th>
-        @*<th>
-                @Html.DisplayNameFor(model => model.VisningsSchemaId)
-            </th>*@
-        @*<th></th>*@
     </tr>
-
+    @{
+        var i = 0;
+    }
     @foreach (var item in Model)
     {
+
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.AntalBokadePlatser)
-            </td>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.VisningsSchemaId)
-                </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-                </td>*@
-        </tr>
+                    @Html.DisplayFor(modelItem => item.AntalBokadePlatser)
+                </td>
+            </tr>
+        i = i + item.AntalBokadePlatser;
     }
 
+    <tr>
+        <td>
+            @Html.Raw(i)
+        </td>
+    </tr>
 
     <tr>
         <td>
             <form method="post" action="@Url.Action("Boka", "Biljett")">
                 <input type="text" id="antalIn" name="antalIn" placeholder="Antal">
-                @*<input type="text" id="testar" name="testar" placeholder="test">*@
-                @*<input type="number" id="antal" name="antal" placeholder="Antal">*@
-                @*@Html.HiddenFor(model => model.VisningsSchemaId, new { id = Model.VisningsSchemaId })Skickar med schema-id vidare, tillsammans med antal platser ovan*@
                 <br />
                 <input type="submit" value="Bekräfta" />
             </form>
         </td>
     </tr>
 
-</table>
+</table>*@

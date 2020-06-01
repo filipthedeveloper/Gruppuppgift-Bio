@@ -116,7 +116,7 @@ namespace Ja.Controllers
                                 if (Session["KundSession"] != null)
                                 {
                                     TempData["login"] = "Inloggningen lyckades!";
-                                    return RedirectToAction("Index", "Home");
+                                    return View();
                                 }
                             }
                             //Lägger till errormeddelande

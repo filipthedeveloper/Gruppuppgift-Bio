@@ -122,8 +122,6 @@ namespace Ja.Controllers
         [HttpPost]
         public ActionResult Boka(string antalIn)    //Här uppstår ett problem. Textrutan som vi skickar in, returnerar en null? Även om man matat in något? Behöver ändras i inparametern här, beroende på input fältets typ
         {
-
-            Console.Write("???");
             int antal = int.Parse(antalIn);
 
             //Hämta när man ska köpa biljetter
@@ -132,7 +130,6 @@ namespace Ja.Controllers
             if (Session["KundSession"] != null)
             {
                 inloggadKund = (Kund)Session["KundSession"];
-                Console.Write("Success");
             }
             //else errorgrejs måste in här, om sessionen är nnull hur skall de då kunna få boka?
 

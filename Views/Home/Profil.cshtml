@@ -4,73 +4,41 @@
     ViewBag.Title = "Profil";
 }
 
-<h2>Profil</h2>
+@*<h2>Profil</h2>*@
+<link href="~/Content/profil.css" rel="stylesheet" />
+@*<link href="~/Content/filmlista.css" rel="stylesheet" />*@
 
-<p>
+@*<p>
     @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.InloggningsId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Losenord)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Fornamn)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Efternamn)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PersonNr)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TelefonNr)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Bonuspoang)
-        </th>
-        <th></th>
-    </tr>
+</p>*@
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.InloggningsId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Losenord)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Fornamn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Efternamn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PersonNr)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TelefonNr)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Bonuspoang)
-        </td>
-        @*<td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>*@
-    </tr>
-}
-    
-</table>
-<a href="~/Login/LogOut">Logga ut</a>
+<div class="toppen">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="column">
+                <div class="card">
+                    @*<img src="" />*@
+                    <div class="container" style="text-align:center">
+                        <img src="~/images/user.png" style="padding-top:10px" />
+                        <h2>@Html.DisplayFor(modelItem => item.Email)</h2>
+                        <p class="title brheight">
+                            <div style="font-weight:bold">@Html.DisplayFor(modelItem => item.Fornamn) @Html.DisplayFor(modelItem => item.Efternamn)</div>
+                            <label style="font-weight:bold">Telefon-Nr:</label> @Html.DisplayFor(modelItem => item.TelefonNr)<br />
+                            <label style="font-weight:bold">Person-Nr:</label> @Html.DisplayFor(modelItem => item.PersonNr)<br />
+                            <label style="font-weight:bold">Bonuspoäng:</label> @Html.DisplayFor(modelItem => item.Bonuspoang)<br />
+                        </p>
+                        @*<p>@Html.DisplayFor(modelItem => item.Beskrivning)</p>*@
+                        @*<p>@Html.ActionLink("Schema", "VisningsSchema", "Biljett", new { titel = item.Titel }, null)</p>*@
+                        @*<input class="button" type="submit" value="Schema" />*@
+                        <input class="button" value="Logga ut" onclick="location.href='@Url.Action("LogOut", "Login")'" />
+                    </div>
+
+                </div>
+
+            </div>
+        }
+    </div>
+</div>
+
+@*<a href="~/Login/LogOut">Logga ut</a>*@
