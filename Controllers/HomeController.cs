@@ -19,8 +19,6 @@ namespace Ja.Controllers
 
         public ActionResult Contact()
         {
-            
-
             return View();
         }
 
@@ -32,12 +30,7 @@ namespace Ja.Controllers
         [Authorize]
         public ActionResult Profil()
         {
-            //Kund inloggadKund = null;
-            //inloggadKund = (Kund)Session["Kund"];
-
-            //var ktest = JsonConvert.DeserializeObject<List<Kund>>();
-
-
+            //Returnerar information till profilen via session
             return View(Session["KundLista"]);
         }
 

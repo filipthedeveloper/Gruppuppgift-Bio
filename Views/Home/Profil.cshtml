@@ -9,8 +9,8 @@
 @*<link href="~/Content/filmlista.css" rel="stylesheet" />*@
 
 @*<p>
-    @Html.ActionLink("Create New", "Create")
-</p>*@
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
 
 <div class="toppen">
     <div class="row">
@@ -42,3 +42,11 @@
 </div>
 
 @*<a href="~/Login/LogOut">Logga ut</a>*@
+@{
+    if (TempData["login"] != null)
+    {
+        <script type="text/javascript">
+                alert(@Html.Raw(Json.Encode(TempData["login"])))
+        </script>
+    }
+}

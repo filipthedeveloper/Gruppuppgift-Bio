@@ -14,9 +14,9 @@
 </head>
 <body>
     <div>
-       
+
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="/Home/Index">Hem</a>
+            <a class="navbar-brand" href="~/Home/Index">Hem</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -29,13 +29,13 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/Home/Contact">Kontakt</a>
+                        <a class="nav-link" href="~/Home/Contact">Kontakt</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/Home/About">Om</a>
+                        <a class="nav-link" href="~/Home/About">Om</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/Login/Index">Profil</a>
+                        <a class="nav-link" href="~/Login/Index">Profil</a>
                     </li>
                 </ul>
             </div>
@@ -59,22 +59,22 @@
                                 <div class="form-group"> <label class="form-control-label text-muted">Lösenord</label> <input type="password" id="losenord" name="losenord" placeholder="Lösenord" class="form-control"> </div>
                                 <div class="row justify-content-center my-3 px-3"> <input class="btn-block btn-color" style="color:white !important;" type="submit" value="Logga in" /> </div>
                                 <div>@Html.ValidationSummary()</div>
-                                
+
                             </form>
-                            
+
                         </div>
                     </div>
                     <!--Knapp som går till att skapa nyt konto-->
                     <div class="bottom text-center mb-5">
-                        <a href="/Login/Create" class="sm-text mx-auto mb-3">Har du inget konto?<button class="btn btn-white ml-2">Skapa nytt</button></a>
+                        <a href="~/Login/Create" class="sm-text mx-auto mb-3">Har du inget konto?<button class="btn btn-white ml-2">Skapa nytt</button></a>
                     </div>
                 </div>
                 <div class="card card2">
                     <div class="my-auto mx-md-5 px-md-5 right">
                         <h3 class="text-white">Vi är mer än ett företag.</h3> <small class="text-white">
-    SystemBio-
-    En av världens ledande filmoperatörer, som hanterar de mest respekterade varumärkena på stora europeiska marknader och Taiwan, som sträcker sig över tio länder, över 280 webbplatser och över 2400 skärmar.
-</small>
+                            SystemBio-
+                            En av världens ledande filmoperatörer, som hanterar de mest respekterade varumärkena på stora europeiska marknader och Taiwan, som sträcker sig över tio länder, över 280 webbplatser och över 2400 skärmar.
+                        </small>
                     </div>
                 </div>
             </div>
@@ -83,6 +83,13 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    
+    @{
+        if (TempData["create"] != null)
+        {
+            <script type="text/javascript">
+                alert(@Html.Raw(Json.Encode(TempData["create"])))
+            </script>
+        }
+    }
 </body>
 </html>
