@@ -59,9 +59,7 @@ namespace Ja.Controllers
             //Skickar bokningen till sidan
             return View(BokadePlatser);
         }
-
-        //string BaseurlSchema = "http://193.10.202.71/Filmservice/film";
-        //[Authorize]
+        
         public async Task<ActionResult> VisningsSchema(string titel)
         {
             //Lista för schema
@@ -99,7 +97,7 @@ namespace Ja.Controllers
                 return RedirectToAction("Index", "Film");
 
             }
-            //rVy med schema
+            //Vy med schema
             return View(SchemaLista);
         }
 

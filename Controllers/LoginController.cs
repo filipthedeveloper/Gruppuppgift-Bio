@@ -205,7 +205,6 @@ namespace Ja.Controllers
                         else
                         {
                             Logger.Error("Fail på response av kundservice kunder i create, response2.");
-                            Console.Write("Fail");
                         }
                     }
                     
@@ -213,7 +212,6 @@ namespace Ja.Controllers
                 else
                 {
                     Logger.Error("Response fel på skapa konto.");
-                    //Console.Write("Error");
                 }
 
             }

@@ -50,7 +50,7 @@ namespace Ja.Controllers
             catch (Exception)
             {
                 Logger.Error("Error, kunde ej hämta filmer.");
-                return RedirectToAction("Index", "Film");
+                return RedirectToAction("Index", "Home");
             }
             //Returnerar informationen till vyn
             return View(Filmlist);

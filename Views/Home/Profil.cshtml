@@ -4,13 +4,8 @@
     ViewBag.Title = "Profil";
 }
 
-@*<h2>Profil</h2>*@
 <link href="~/Content/profil.css" rel="stylesheet" />
-@*<link href="~/Content/filmlista.css" rel="stylesheet" />*@
 
-@*<p>
-        @Html.ActionLink("Create New", "Create")
-    </p>*@
 
 <div class="toppen">
     <div class="row">
@@ -18,7 +13,6 @@
         {
             <div class="column">
                 <div class="card">
-                    @*<img src="" />*@
                     <div class="container" style="text-align:center">
                         <img src="~/images/user.png" style="padding-top:10px" />
                         <h2>@Html.DisplayFor(modelItem => item.Email)</h2>
@@ -28,9 +22,6 @@
                             <label style="font-weight:bold">Person-Nr:</label> @Html.DisplayFor(modelItem => item.PersonNr)<br />
                             <label style="font-weight:bold">Bonuspoäng:</label> @Html.DisplayFor(modelItem => item.Bonuspoang)<br />
                         </p>
-                        @*<p>@Html.DisplayFor(modelItem => item.Beskrivning)</p>*@
-                        @*<p>@Html.ActionLink("Schema", "VisningsSchema", "Biljett", new { titel = item.Titel }, null)</p>*@
-                        @*<input class="button" type="submit" value="Schema" />*@
                         <input class="button" value="Logga ut" onclick="location.href='@Url.Action("LogOut", "Login")'" />
                     </div>
 
@@ -41,7 +32,6 @@
     </div>
 </div>
 
-@*<a href="~/Login/LogOut">Logga ut</a>*@
 @{
     if (TempData["login"] != null)
     {
